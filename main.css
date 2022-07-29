@@ -1,0 +1,118 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 350px;
+    height: 500px;
+}
+
+.extension-heading {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid gainsboro;
+    padding: 10px;
+}
+
+.cancel-page {
+    height: 18px;
+    cursor: pointer;
+}
+
+.extension-title {
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.timer-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.timer-outline {
+    border: 3px solid black;
+    border-radius: 100px ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    margin: 10px 0px;
+}
+
+.timer-toggle {
+    color: green;
+    cursor: pointer;
+}
+
+.options-section {
+    border: 1px solid gainsboro;
+    border-left: none;
+    border-right: none;
+}
+
+.options {
+    display: flex;
+    list-style: none;
+}
+
+.option-item{
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.option-item:hover {
+    font-weight: 400;
+    text-decoration: underline;
+}
+
+.search-section {
+    border-bottom: 1px solid gainsboro;
+}
+
+.search-content {
+    display: flex;
+    padding: 0px 5px;
+    align-items: center;
+}
+
+.magnifying-glass {
+    height: 16px;
+}
+
+.website-search {
+    height: 30px;
+    width: 100%;
+    border: none;
+}
+
+.website-search:focus {
+    outline: none;
+}
+
+.add-website {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    border: none;
+    border-bottom: 1px solid gainsboro;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.website-cards-section {
+    height: 200px;
+}
+
+
+
+
+footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+}

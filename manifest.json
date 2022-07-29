@@ -1,0 +1,13 @@
+{
+    "name": "EVAQ8",
+    "description": "Lock away any websites you deem distracting for a given period of time. The perfect extension to stay focused during a study session.",
+    "version": "1.0",
+    "manifest_version": 3,
+    "background": {
+
+    },
+    "permissions": ["storage", "tabs"],
+    "action": {
+        "default_popup": "popup.html"
+    }
+}
