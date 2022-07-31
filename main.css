@@ -5,7 +5,7 @@
 
 body {
     width: 350px;
-    height: 500px;
+    max-height: 500px;
 }
 
 .extension-heading {
@@ -34,7 +34,7 @@ body {
 }
 
 .timer-outline {
-    border: 3px solid black;
+    border: 3px solid gray;
     border-radius: 100px ;
     display: flex;
     justify-content: center;
@@ -44,9 +44,26 @@ body {
     margin: 10px 0px;
 }
 
+.timer{
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.colons {
+    margin-bottom: 5px;
+}
+
+
+.hours, .minutes, .seconds {
+    width: 15px;
+}
+
 .timer-toggle {
     color: green;
     cursor: pointer;
+    border: none;
+    background-color: white;
 }
 
 .options-section {
@@ -80,7 +97,7 @@ body {
     align-items: center;
 }
 
-.magnifying-glass {
+.magnifying-glass, .plus  {
     height: 16px;
 }
 
@@ -100,16 +117,46 @@ body {
     height: 30px;
     border: none;
     border-bottom: 1px solid gainsboro;
-    padding: 5px 10px;
+    padding: 5px;
     cursor: pointer;
 }
 
-.website-cards-section {
+#website-cards-section {
     height: 200px;
 }
 
+.website-card {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid gainsboro;
+}
 
+.website-content {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
 
+.website-text {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.website-controls {
+    justify-content: flex-end;
+}
+.website-card svg {
+    cursor: pointer;
+}
+
+.website-edit {
+    height: 16px;
+}
+
+.website-cancel{
+    height: 18px;
+}
 
 footer {
     display: flex;

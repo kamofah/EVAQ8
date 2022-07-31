@@ -1,7 +1,8 @@
 {
-    "name": "EVAQ8",
-    "description": "Lock away any websites you deem distracting for a given period of time. The perfect extension to stay focused during a study session.",
+    "name": "EVA-Q8",
+    "description": "Lock away any websites you deem distracting for a given period of time.",
     "version": "1.0",
+    "author": "Kwaku Amofah-Boafo",
     "manifest_version": 3,
     "background": {
 
