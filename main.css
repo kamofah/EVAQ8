@@ -123,6 +123,9 @@ body {
 
 #website-cards-section {
     height: 200px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: justify;
 }
 
 .website-card {

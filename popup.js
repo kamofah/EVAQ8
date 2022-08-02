@@ -11,17 +11,51 @@ document.addEventListener('DOMContentLoaded', () => {
      * The following code triggers the timers start and stop button.
      * Additionally adjusts the timer accordingly.
      */
+    function calculateTimer(hourVal, minVal, secVal){
+        if(hourVal == 00 && minVal == 00 && secVal == 00){
+            hourVal = 00;
+            minVal = 00;
+            secVal = 00;
+        } else if(secVal != 00){
+            secVal--;
+        } else if(minVal != 00 && secVal == 00){
+            secVal = 59;
+            minVal--;
+        } else if(hourVal != 00 && minVal == 00){
+            minVal = 60;
+            hourVal--;
+        }
+        return
+    }
+
+
     const TIMER_TOGGLE = document.getElementsByClassName('timer-toggle')[0];
+    const TIMER = document.getElementsByClassName('timer')[0];
     let isTimerActive = false; 
     TIMER_TOGGLE.addEventListener('click', () => {
+        const HOURS = document.getElementsByClassName('hours')[0];
+        const MINUTES = document.getElementsByClassName('minutes')[0];
+        const SECONDS = document.getElementsByClassName('seconds')[0];
+            function startInterval(){
+                startTimer = setInterval(function() {
+                    calculateTimer(HOURS.value, MINUTES.value, SECONDS.value);
+                }, 1000);
+            }
+            startInterval();
         if (isTimerActive) {
             TIMER_TOGGLE.innerText = "Start";
             TIMER_TOGGLE.style.color = "green";
             isTimerActive = !isTimerActive;
+            HOURS.style.border = '';
+            MINUTES.style.border = '';
+            SECONDS.style.border = '';
         } else {
             TIMER_TOGGLE.innerText = "Stop";
             TIMER_TOGGLE.style.color = "red";
             isTimerActive = !isTimerActive;
+            HOURS.style.border = 'none';
+            MINUTES.style.border = 'none';
+            SECONDS.style.border = 'none'; 
         }
         // Run Timer Code
     });
@@ -66,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     let listOfWebsites = [];
-    listOfWebsites = ["Youtube.com", "Google.com", "Netflix.com", "Grammarly.com"];
+    listOfWebsites = ["Youtube.com", "Google.com", "Netflix.com", "Grammarly.com", "reddit.com", "amazon.com"];
     const addWebsite = document.getElementsByClassName('add-website')[0];
     let addWebsiteText = document.getElementsByClassName('add-website-text')[0];
     let websiteInput;

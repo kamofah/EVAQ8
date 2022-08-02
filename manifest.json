@@ -8,6 +8,15 @@
 
     },
     "permissions": ["storage", "tabs"],
+    "host_permissions": ["<all_urls>"], 
+    "content_scripts": [
+        {
+            "matches": ["*://*.reddit.com/*"],
+            "js": ["contentScript.js"],
+            "css": ["contentScript.css"],
+            "run_at": "document_end"
+        }
+    ],
     "action": {
         "default_popup": "popup.html"
     }
