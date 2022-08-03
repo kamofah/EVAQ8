@@ -11,19 +11,37 @@ document.addEventListener('DOMContentLoaded', () => {
      * The following code triggers the timers start and stop button.
      * Additionally adjusts the timer accordingly.
      */
+    const HOURS = document.getElementsByClassName('hours')[0];
+    const MINUTES = document.getElementsByClassName('minutes')[0];
+    const SECONDS = document.getElementsByClassName('seconds')[0];
+    function formatTimerSection(timerSection){
+        if(timerSection.value == "0"){
+            timerSection.value = "00";
+        }
+        if(parseInt(timerSection.value) < 10){
+            timerSection.value = "0" + parseInt(timerSection.value);
+        }
+    }
     function calculateTimer(hourVal, minVal, secVal){
-        if(hourVal == 00 && minVal == 00 && secVal == 00){
-            hourVal = 00;
-            minVal = 00;
-            secVal = 00;
-        } else if(secVal != 00){
-            secVal--;
-        } else if(minVal != 00 && secVal == 00){
-            secVal = 59;
-            minVal--;
-        } else if(hourVal != 00 && minVal == 00){
-            minVal = 60;
-            hourVal--;
+        if(parseInt(hourVal) == 0 && parseInt(minVal) == 0 && parseInt(secVal) == 0){
+            HOURS.value = "00";
+            MINUTES.value = "00";
+            SECONDS.value = "00";
+        } else if(parseInt(secVal) != 0){
+            SECONDS.value = parseInt(secVal) - 1;
+            SECONDS.value = SECONDS.value.toString();
+            formatTimerSection(SECONDS);
+        } else if(parseInt(minVal) != 0 && parseInt(secVal) == 0){
+            SECONDS.value = "59";
+            MINUTES.value = parseInt(minVal) - 1;
+            MINUTES.value = MINUTES.value.toString();
+            formatTimerSection(MINUTES);
+
+        } else if(parseInt(hourVal) != 0 && parseInt(minVal) == 0){
+            MINUTES.value = "60";
+            HOURS.value = parseInt(hourVal) - 1;
+            HOURS.value.toString();
+            formatTimerSection(HOURS);
         }
         return
     }
@@ -33,15 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const TIMER = document.getElementsByClassName('timer')[0];
     let isTimerActive = false; 
     TIMER_TOGGLE.addEventListener('click', () => {
-        const HOURS = document.getElementsByClassName('hours')[0];
-        const MINUTES = document.getElementsByClassName('minutes')[0];
-        const SECONDS = document.getElementsByClassName('seconds')[0];
-            function startInterval(){
-                startTimer = setInterval(function() {
-                    calculateTimer(HOURS.value, MINUTES.value, SECONDS.value);
-                }, 1000);
-            }
-            startInterval();
+        
         if (isTimerActive) {
             TIMER_TOGGLE.innerText = "Start";
             TIMER_TOGGLE.style.color = "green";
@@ -56,6 +66,14 @@ document.addEventListener('DOMContentLoaded', () => {
             HOURS.style.border = 'none';
             MINUTES.style.border = 'none';
             SECONDS.style.border = 'none'; 
+            function startInterval(){
+                startTimer = setInterval(function() {
+                    console.log("here")
+                    calculateTimer(HOURS.value, MINUTES.value, SECONDS.value);
+                    
+                }, 1000);
+            }
+            startInterval();
         }
         // Run Timer Code
     });
