@@ -8,12 +8,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /**
+     * The following code switchs between the website and breaks tab
+     */
+    const WEBSITE_TAB = document.getElementsByClassName('website-tab')[0];
+    const BREAK_TAB = document.getElementsByClassName('break-tab')[0];
+    BREAK_TAB.addEventListener('click', () => {
+        if(!BREAK_TAB.className.includes('active-tab')){
+            BREAK_TAB.className += " active-tab";
+            WEBSITE_TAB.className = "option-item";
+        }
+    });
+
+    WEBSITE_TAB.addEventListener('click', () => {
+        if(!WEBSITE_TAB.className.includes('active-tab')){
+            WEBSITE_TAB.className += " active-tab";
+            BREAK_TAB.className = "option-item";
+        }
+    });
+
+    /**
      * The following code triggers the timers start and stop button.
      * Additionally adjusts the timer accordingly.
      */
     const HOURS = document.getElementsByClassName('hours')[0];
     const MINUTES = document.getElementsByClassName('minutes')[0];
     const SECONDS = document.getElementsByClassName('seconds')[0];
+    const TIMER_TOGGLE = document.getElementsByClassName('timer-toggle')[0];
+    let isTimerActive = false;
+
     function formatTimerSection(timerSection){
         if(timerSection.value == "0"){
             timerSection.value = "00";
@@ -22,11 +44,14 @@ document.addEventListener('DOMContentLoaded', () => {
             timerSection.value = "0" + parseInt(timerSection.value);
         }
     }
+
     function calculateTimer(hourVal, minVal, secVal){
         if(parseInt(hourVal) == 0 && parseInt(minVal) == 0 && parseInt(secVal) == 0){
             HOURS.value = "00";
             MINUTES.value = "00";
             SECONDS.value = "00";
+            stopInterval();
+            TIMER_TOGGLE.click();
         } else if(parseInt(secVal) != 0){
             SECONDS.value = parseInt(secVal) - 1;
             SECONDS.value = SECONDS.value.toString();
@@ -45,13 +70,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return
     }
+    
+    function stopInterval() {
+        clearInterval(startTimer);
+    }
 
-
-    const TIMER_TOGGLE = document.getElementsByClassName('timer-toggle')[0];
-    const TIMER = document.getElementsByClassName('timer')[0];
-    let isTimerActive = false; 
     TIMER_TOGGLE.addEventListener('click', () => {
-        
         if (isTimerActive) {
             TIMER_TOGGLE.innerText = "Start";
             TIMER_TOGGLE.style.color = "green";
@@ -59,6 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
             HOURS.style.border = '';
             MINUTES.style.border = '';
             SECONDS.style.border = '';
+            stopInterval();
+            HOURS.removeAttribute('disabled');
+            MINUTES.removeAttribute('disabled');
+            SECONDS.removeAttribute('disabled');
         } else {
             TIMER_TOGGLE.innerText = "Stop";
             TIMER_TOGGLE.style.color = "red";
@@ -66,6 +94,9 @@ document.addEventListener('DOMContentLoaded', () => {
             HOURS.style.border = 'none';
             MINUTES.style.border = 'none';
             SECONDS.style.border = 'none'; 
+            HOURS.setAttribute('disabled', '')
+            MINUTES.setAttribute('disabled', '')
+            SECONDS.setAttribute('disabled', '')
             function startInterval(){
                 startTimer = setInterval(function() {
                     console.log("here")
@@ -75,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             startInterval();
         }
-        // Run Timer Code
     });
 
     /**
@@ -115,7 +145,6 @@ document.addEventListener('DOMContentLoaded', () => {
             websiteIndex++;
         });
     }
-
 
     let listOfWebsites = [];
     listOfWebsites = ["Youtube.com", "Google.com", "Netflix.com", "Grammarly.com", "reddit.com", "amazon.com"];
@@ -166,10 +195,15 @@ document.addEventListener('DOMContentLoaded', () => {
      * Handles Live Filtered Search when the user types into the search bar for a website
      */
     const WEBSITE_SEARCH = document.getElementsByClassName('website-search')[0];
-    WEBSITE_SEARCH.addEventListener('keydown', (event) => {
+    WEBSITE_SEARCH.addEventListener('keyup', (event) => {
         let filteredWebsites = listOfWebsites.filter((website) => website.toLowerCase().substring(0, website.length - 4).includes(WEBSITE_SEARCH.value.toLowerCase()));
         WEBSITE_CARDS_SECTION.innerHTML = '';
         renderWebsiteCards(filteredWebsites);
     });
 
+    chrome.storage.sync.set({"listOfWebsites": listOfWebsites})
+
 });
+
+
+
