@@ -110,7 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * Following code excutes code for when the Add Website button is clicked.
-     * Additionally handles updating frontend when a user enters a website.
+     * Additionally handles updating frontend when a user enters a website by
+     * Saving the websites typed by the user into an array when the user presses enter.
      */
     const WEBSITE_CARDS_SECTION = document.getElementById('website-cards-section');
     function generateWebsiteCard(websiteUrl){
@@ -147,8 +148,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     let listOfWebsites = [];
-    listOfWebsites = ["Youtube.com", "Google.com", "Netflix.com", "Grammarly.com", "reddit.com", "amazon.com"];
-    const addWebsite = document.getElementsByClassName('add-website')[0];
+    // listOfWebsites = ["Youtube.com", "Google.com", "Netflix.com", "Grammarly.com", "reddit.com", "amazon.com"];
+    let addWebsite = document.getElementsByClassName('add-website')[0];
     let addWebsiteText = document.getElementsByClassName('add-website-text')[0];
     let websiteInput;
     addWebsite.addEventListener('click', () => {
@@ -159,23 +160,18 @@ document.addEventListener('DOMContentLoaded', () => {
             websiteInput.setAttribute('autofocus', "");
             addWebsite.replaceChild(websiteInput, addWebsite.lastElementChild);
         }
-    });
-    renderWebsiteCards(listOfWebsites);
-    /**
-     * Save the websites added by the user into an array when the user presses enter
-     * TODO: Fix the if condition.
-     */
-    if(addWebsite.lastElementChild.tagName !== 'P'){
         websiteInput.addEventListener('keypress', (event) => {
-            console.log('got here');
             if(event.key === 'Enter'){
                 listOfWebsites.push(websiteInput.value);
-                addWebsite.replaceChild(addWebsiteText, websiteInput);
+                console.log(listOfWebsites)
+                console.log(addWebsite.lastElementChild)
+                addWebsite.replaceChild(addWebsiteText, addWebsite.lastElementChild);
                 WEBSITE_CARDS_SECTION.innerHTML = '';
                 renderWebsiteCards(listOfWebsites);
             }
         });
-    }
+    });
+    renderWebsiteCards(listOfWebsites);
 
     /**
      * Remove a website card when the website cancel button is clicked
