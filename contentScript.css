@@ -1,6 +1,7 @@
 .lock-page {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: 300px;
+    font-size: 50px;
 }

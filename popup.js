@@ -99,9 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
             SECONDS.setAttribute('disabled', '')
             function startInterval(){
                 startTimer = setInterval(function() {
-                    console.log("here")
                     calculateTimer(HOURS.value, MINUTES.value, SECONDS.value);
-                    
                 }, 1000);
             }
             startInterval();
@@ -152,40 +150,54 @@ document.addEventListener('DOMContentLoaded', () => {
     let addWebsite = document.getElementsByClassName('add-website')[0];
     let addWebsiteText = document.getElementsByClassName('add-website-text')[0];
     let websiteInput;
-    addWebsite.addEventListener('click', () => {
+    addWebsite.addEventListener('click', (event) => {
         if(addWebsite.lastElementChild.tagName === 'P'){
             websiteInput = document.createElement('input');
             websiteInput.className = 'website-search';
             websiteInput.type = 'text';
-            websiteInput.setAttribute('autofocus', "");
+            websiteInput.setAttribute('autofocus', '');
             addWebsite.replaceChild(websiteInput, addWebsite.lastElementChild);
+
+            // handles what occurs when the user presses enter on search field
+            websiteInput.addEventListener('keypress', (event) => {
+                if(event.key === 'Enter'){
+                    listOfWebsites.push(websiteInput.value);
+                    chrome.storage.sync.set({"listOfWebsites": listOfWebsites})
+                    addWebsite.replaceChild(addWebsiteText, addWebsite.lastElementChild);
+                    WEBSITE_CARDS_SECTION.innerHTML = '';
+                    renderWebsiteCards(listOfWebsites);
+                    bindCancelEvent();
+                    console.log(listOfWebsites)
+                }
+            });
         }
-        websiteInput.addEventListener('keypress', (event) => {
-            if(event.key === 'Enter'){
-                listOfWebsites.push(websiteInput.value);
-                console.log(listOfWebsites)
-                console.log(addWebsite.lastElementChild)
-                addWebsite.replaceChild(addWebsiteText, addWebsite.lastElementChild);
-                WEBSITE_CARDS_SECTION.innerHTML = '';
-                renderWebsiteCards(listOfWebsites);
-            }
-        });
+        
     });
     renderWebsiteCards(listOfWebsites);
+    console.log(chrome.storage.sync.get(["listOfWebsites"], function(result) {
+        console.log(result.listOfWebsites);
+      }))
+
 
     /**
      * Remove a website card when the website cancel button is clicked
      * TODO: Find a way to access newly created DOM Elements
+     * Create bindCancelEvent function and place it after renderWebsiteCards
      */
-    const LIST_OF_CARDS = [].slice.call(document.getElementById('website-cards-section').children);
-    LIST_OF_CARDS.forEach((card) => {
-        const CARD_CANCEL = document.getElementsByClassName('website-cancel')[0];
-        CARD_CANCEL.addEventListener('click', () => {
-            let cardIndex = CARD_CANCEL.id.charAt(CARD_CANCEL.id.length - 1);
-            listOfWebsites.splice(cardIndex, 1);
-            console.log(listOfWebsites);
+    function bindCancelEvent(){
+        const LIST_OF_CARDS = [].slice.call(document.getElementById('website-cards-section').children);
+        LIST_OF_CARDS.forEach((card) => {
+            const CARD_CANCEL = document.getElementsByClassName('website-cancel')[0];
+            CARD_CANCEL.addEventListener('click', () => {
+                let cardIndex = card.id.charAt(card.id.length - 1);
+                console.log(cardIndex)
+                listOfWebsites.splice(cardIndex, 1);
+                WEBSITE_CARDS_SECTION.innerHTML = '';
+                renderWebsiteCards(listOfWebsites);
+            });
         });
-    });
+    }
+   
 
     /**
      * Handles Live Filtered Search when the user types into the search bar for a website
@@ -196,8 +208,6 @@ document.addEventListener('DOMContentLoaded', () => {
         WEBSITE_CARDS_SECTION.innerHTML = '';
         renderWebsiteCards(filteredWebsites);
     });
-
-    chrome.storage.sync.set({"listOfWebsites": listOfWebsites})
 
 });
 

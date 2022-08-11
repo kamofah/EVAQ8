@@ -19,5 +19,10 @@
     ],
     "action": {
         "default_popup": "popup.html"
+    },
+    "icons": {
+        "16": "Cropped_EVAQ8_16.png",
+        "48": "Cropped_EVAQ8_48.png",
+        "128" : "Cropped_EVAQ8-96.png"
     }
 }
