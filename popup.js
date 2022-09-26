@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return
     }
-    
+
     function stopInterval() {
         clearInterval(startTimer);
     }
@@ -174,10 +174,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
     });
     renderWebsiteCards(listOfWebsites);
-    console.log(chrome.storage.sync.get(["listOfWebsites"], function(result) {
-        console.log(result.listOfWebsites);
-      }))
-
 
     /**
      * Remove a website card when the website cancel button is clicked
@@ -196,6 +192,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderWebsiteCards(listOfWebsites);
             });
         });
+    }
+
+    function bindEditEvent(){
+        const LIST_OF_CARDS = [].slice.call(document.getElementById('website-cards-section').children);
+        LIST_OF_CARDS.forEach((card) => {
+            const CARD_EDIT = document.getElementsByClassName('website-edit')[0]
+            CARD_EDIT.addEventListener('click', () => {
+                // Add code to switch website-card name to be an input field
+                let cardIndex = card.id.charAt(card.id.length - 1);
+                listOfWebsites[cardIndex] = 'Sample Name';
+                renderWebsiteCards(listOfWebsites);
+            })
+        })
     }
    
 
